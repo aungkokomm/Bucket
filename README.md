@@ -12,6 +12,7 @@
   <img alt="Platform" src="https://img.shields.io/badge/Windows%2010%2F11-x64-555?style=for-the-badge">
   <img alt="License" src="https://img.shields.io/badge/License-MIT-1FA855?style=for-the-badge">
 </p>
+<img width="1536" height="1024" alt="buket_banner" src="https://github.com/user-attachments/assets/c464c703-bb59-49e9-8278-8f567e2f1156" />
 
 ---
 
