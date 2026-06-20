@@ -346,6 +346,65 @@ public sealed partial class BucketWindow : Window, IBucketHost
 
     private void Settings_Click(object sender, RoutedEventArgs e) => _manager.ShowSettings();
 
+    private async void About_Click(object sender, RoutedEventArgs e)
+    {
+        var header = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 12 };
+        header.Children.Add(new Image
+        {
+            Source = TitleIcon.Source,
+            Width = 44,
+            Height = 44,
+            VerticalAlignment = VerticalAlignment.Center,
+        });
+        var titleStack = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
+        titleStack.Children.Add(new TextBlock
+        {
+            Text = "Bucket",
+            FontSize = 20,
+            FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
+        });
+        titleStack.Children.Add(new TextBlock { Text = "Version 1.0.0", FontSize = 12, Opacity = 0.7 });
+        header.Children.Add(titleStack);
+
+        var panel = new StackPanel { Spacing = 4, Width = 320 };
+        panel.Children.Add(header);
+        panel.Children.Add(new TextBlock
+        {
+            Text = "A portable file-staging shelf for Windows.",
+            TextWrapping = TextWrapping.Wrap,
+            Margin = new Thickness(0, 8, 0, 4),
+        });
+        panel.Children.Add(new HyperlinkButton
+        {
+            Content = "GitHub repository",
+            NavigateUri = new Uri("https://github.com/aungkokomm/Bucket"),
+            Padding = new Thickness(0),
+        });
+        panel.Children.Add(new HyperlinkButton
+        {
+            Content = "More of my projects",
+            NavigateUri = new Uri("https://aungkokomm.github.io/"),
+            Padding = new Thickness(0),
+        });
+        panel.Children.Add(new TextBlock
+        {
+            Text = "© 2026 Aung Ko Ko · MIT License",
+            FontSize = 12,
+            Opacity = 0.7,
+            Margin = new Thickness(0, 8, 0, 0),
+        });
+
+        var dialog = new ContentDialog
+        {
+            Title = "About",
+            Content = panel,
+            CloseButtonText = "Close",
+            XamlRoot = Content.XamlRoot,
+        };
+        try { await dialog.ShowAsync(); }
+        catch { /* a dialog is already open — ignore */ }
+    }
+
     /// <summary>The bucket's display name, for the tray's bucket list.</summary>
     public string DisplayName => ViewModel.DisplayName;
 
