@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Window
+    x:Class="Bucket.Views.BucketWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Bucket.Models"
+    xmlns:helpers="using:Bucket.Helpers"
+    Title="Bucket"
+    mc:Ignorable="d">
+
+    <Grid x:Name="Root" Background="{x:Bind ViewModel.BackgroundBrush, Mode=OneWay}"
+          KeyboardAcceleratorPlacementMode="Hidden">
+        <Grid.KeyboardAccelerators>
+            <KeyboardAccelerator Key="Delete" Invoked="Delete_Invoked" />
+            <KeyboardAccelerator Modifiers="Control" Key="V" Invoked="Paste_Invoked" />
+            <KeyboardAccelerator Modifiers="Control" Key="N" Invoked="NewBucket_Invoked" />
+            <KeyboardAccelerator Modifiers="Control" Key="Z" Invoked="Undo_Invoked" />
+        </Grid.KeyboardAccelerators>
+
+        <Grid.Resources>
+            <!-- Compact toolbar buttons -->
+            <Style x:Key="ToolBtn" TargetType="Button">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="8" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <Style x:Key="ToolToggle" TargetType="ToggleButton">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="8" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+
+            <!-- ===================== Item templates ===================== -->
+            <DataTemplate x:Key="MiniTemplate" x:DataType="models:FileItem">
+                <Border CornerRadius="4" Padding="7,3" Margin="2"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Grid Width="16" Height="16">
+                            <FontIcon FontSize="14" Opacity="0.7" Glyph="{x:Bind helpers:Conv.Glyph(IsFolder)}" />
+                            <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
+                        </Grid>
+                        <TextBlock Text="{x:Bind Name}" MaxWidth="150" TextTrimming="CharacterEllipsis"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="CompactTemplate" x:DataType="models:FileItem">
+                <Grid Padding="2,3" ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="22" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="20" Height="20">
+                        <FontIcon FontSize="16" Opacity="0.7" Glyph="{x:Bind helpers:Conv.Glyph(IsFolder)}" />
+                        <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
+                    </Grid>
+                    <TextBlock Grid.Column="1" Text="{x:Bind Name}" VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis" />
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="DetailedTemplate" x:DataType="models:FileItem">
+                <Grid Padding="2,3" ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="22" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="130" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Width="20" Height="20">
+                        <FontIcon FontSize="16" Opacity="0.7" Glyph="{x:Bind helpers:Conv.Glyph(IsFolder)}" />
+                        <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill" />
+                    </Grid>
+                    <TextBlock Grid.Column="1" Text="{x:Bind Name}" VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="2" Text="{x:Bind TypeDescription, Mode=OneWay}" VerticalAlignment="Center"
+                               Opacity="0.8" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="3" Text="{x:Bind helpers:Format.Size(Size)}" VerticalAlignment="Center"
+                               Opacity="0.8" HorizontalAlignment="Right" />
+                    <TextBlock Grid.Column="4" Text="{x:Bind helpers:Format.Modified(DateModified)}" VerticalAlignment="Center"
+                               Opacity="0.8" />
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="GalleryTemplate" x:DataType="models:FileItem">
+                <StackPanel Width="124" Margin="6" Spacing="6">
+                    <Border Width="112" Height="84" CornerRadius="6"
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1">
+                        <Grid>
+                            <FontIcon FontSize="34" Opacity="0.6" Glyph="{x:Bind helpers:Conv.Glyph(IsFolder)}" />
+                            <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="Uniform" Margin="4" />
+                        </Grid>
+                    </Border>
+                    <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Center" TextAlignment="Center"
+                               MaxLines="2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" FontSize="12" />
+                </StackPanel>
+            </DataTemplate>
+
+            <!-- ===================== Item panels ===================== -->
+            <ItemsPanelTemplate x:Key="PanelVertical">
+                <ItemsStackPanel Orientation="Vertical" />
+            </ItemsPanelTemplate>
+            <ItemsPanelTemplate x:Key="PanelHorizontal">
+                <ItemsStackPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+            <ItemsPanelTemplate x:Key="PanelWrap">
+                <ItemsWrapGrid Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Custom title bar: app icon + title + (+ new bucket) + draggable region.
+             Right-click for window actions (no system caption buttons). -->
+        <Grid x:Name="TitleBarArea" Grid.Row="0" Height="40" Padding="12,0,8,0" ColumnSpacing="6"
+              Background="{x:Bind ViewModel.TitleBarBrush, Mode=OneWay}">
+            <Grid.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="New bucket" Command="{x:Bind ViewModel.NewBucketCommand}">
+                        <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE710;" /></MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Rename bucket…" Click="RenameBucket_Click">
+                        <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE8AC;" /></MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <ToggleMenuFlyoutItem Text="Always on top" IsChecked="{x:Bind ViewModel.AlwaysOnTop, Mode=TwoWay}" />
+                    <MenuFlyoutItem Text="Settings…" Click="Settings_Click">
+                        <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE713;" /></MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Text="Minimize to tray" Click="MinimizeToTray_Click">
+                        <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE8A0;" /></MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Minimize" Click="Minimize_Click">
+                        <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE921;" /></MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Text="Close" Click="CloseWindow_Click">
+                        <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE8BB;" /></MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                </MenuFlyout>
+            </Grid.ContextFlyout>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Image x:Name="TitleIcon" Grid.Column="0" Width="20" Height="20" VerticalAlignment="Center"
+                   Visibility="{x:Bind helpers:Conv.Vis(ViewModel.IsMid), Mode=OneWay}" />
+            <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.DisplayName, Mode=OneWay}" VerticalAlignment="Center"
+                       Margin="4,0,0,0" Style="{StaticResource BodyStrongTextBlockStyle}"
+                       TextTrimming="CharacterEllipsis" MaxWidth="180"
+                       Foreground="{x:Bind ViewModel.AccentBrush, Mode=OneWay}"
+                       Visibility="{x:Bind helpers:Conv.Vis(ViewModel.IsMid), Mode=OneWay}" />
+            <Border Grid.Column="2" x:Name="TitleDragRegion" Background="Transparent" />
+            <Button Grid.Column="3" Style="{StaticResource ToolBtn}" Width="32" Height="28"
+                    AutomationProperties.Name="{x:Bind ViewModel.ToggleModeTip, Mode=OneWay}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.ToggleModeTip, Mode=OneWay}"
+                    Command="{x:Bind ViewModel.ToggleModeCommand}">
+                <FontIcon FontSize="14" Glyph="{x:Bind ViewModel.ToggleModeGlyph, Mode=OneWay}"
+                          Foreground="{x:Bind ViewModel.AccentBrush, Mode=OneWay}" />
+            </Button>
+            <Button Grid.Column="4" Style="{StaticResource ToolBtn}" Width="32" Height="28"
+                    AutomationProperties.Name="New bucket"
+                    ToolTipService.ToolTip="New bucket (next color)"
+                    Command="{x:Bind ViewModel.NewBucketCommand}">
+                <FontIcon Glyph="&#xE710;" FontSize="15" Foreground="{x:Bind ViewModel.AccentBrush, Mode=OneWay}" />
+            </Button>
+        </Grid>
+
+        <!-- Subtle accent hairline under the title bar -->
+        <Border Grid.Row="1" Height="1" Opacity="0.45" Background="{x:Bind ViewModel.AccentBrush, Mode=OneWay}" />
+
+        <!-- Toolbar (scrolls horizontally so it stays reachable in a tiny window) -->
+        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+                      HorizontalScrollMode="Enabled" VerticalScrollMode="Disabled"
+                      Visibility="{x:Bind helpers:Conv.Vis(ViewModel.IsMid), Mode=OneWay}">
+            <StackPanel Orientation="Horizontal" Spacing="2" Padding="8,4">
+                <Button Style="{StaticResource ToolBtn}" ToolTipService.ToolTip="Add files or folder">
+                    <FontIcon Glyph="&#xE8E5;" FontSize="16" />
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Add files…" Click="AddFiles_Click">
+                                <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE7C3;" /></MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Text="Add folder…" Click="AddFolder_Click">
+                                <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE8B7;" /></MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+                <Button Style="{StaticResource ToolBtn}" ToolTipService.ToolTip="Paste (Ctrl+V)"
+                        Command="{x:Bind ViewModel.PasteCommand}">
+                    <FontIcon Glyph="&#xE77F;" FontSize="16" />
+                </Button>
+
+                <Border Width="1" Margin="4,4" Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+
+                <Button Style="{StaticResource ToolBtn}" ToolTipService.ToolTip="Copy to a folder…"
+                        Command="{x:Bind ViewModel.CopyToCommand}">
+                    <FontIcon Glyph="&#xE8C8;" FontSize="16" />
+                </Button>
+                <Button Style="{StaticResource ToolBtn}" ToolTipService.ToolTip="Move to a folder…"
+                        Command="{x:Bind ViewModel.MoveToCommand}">
+                    <FontIcon Glyph="&#xE8DE;" FontSize="16" />
+                </Button>
+                <Button x:Name="SendToButton" Style="{StaticResource ToolBtn}" ToolTipService.ToolTip="Send to a pinned folder">
+                    <FontIcon Glyph="&#xE72D;" FontSize="16" />
+                    <Button.Flyout>
+                        <MenuFlyout x:Name="SendToFlyout" Opening="SendToFlyout_Opening" />
+                    </Button.Flyout>
+                </Button>
+                <Button Style="{StaticResource ToolBtn}" AutomationProperties.Name="Export"
+                        ToolTipService.ToolTip="Export… (ZIP, flatten, batch rename)">
+                    <FontIcon Glyph="&#xE898;" FontSize="16" />
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Copy as ZIP…" Command="{x:Bind ViewModel.ExportZipCommand}">
+                                <MenuFlyoutItem.Icon><FontIcon Glyph="&#xF012;" /></MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Text="Copy flattened…" Command="{x:Bind ViewModel.ExportFlattenCommand}">
+                                <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE8B7;" /></MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Text="Batch rename &amp; copy…" Command="{x:Bind ViewModel.ExportRenameCommand}">
+                                <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE8AC;" /></MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+
+                <Border Width="1" Margin="4,4" Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+
+                <Button Style="{StaticResource ToolBtn}" ToolTipService.ToolTip="View mode">
+                    <FontIcon Glyph="&#xE8A9;" FontSize="16" />
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <RadioMenuFlyoutItem x:Name="ViewMini" Text="Mini strip" GroupName="view" Tag="MiniStrip" Click="View_Click" />
+                            <RadioMenuFlyoutItem x:Name="ViewCompact" Text="Compact list" GroupName="view" Tag="CompactList" Click="View_Click" />
+                            <RadioMenuFlyoutItem x:Name="ViewDetailed" Text="Detailed list" GroupName="view" Tag="DetailedList" Click="View_Click" />
+                            <RadioMenuFlyoutItem x:Name="ViewGallery" Text="Gallery" GroupName="view" Tag="Gallery" Click="View_Click" />
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+                <Button Style="{StaticResource ToolBtn}" ToolTipService.ToolTip="Bucket color">
+                    <FontIcon Glyph="&#xE790;" FontSize="16" />
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Blue" Tag="Blue" Click="Color_Click" />
+                            <MenuFlyoutItem Text="Green" Tag="Green" Click="Color_Click" />
+                            <MenuFlyoutItem Text="Orange" Tag="Orange" Click="Color_Click" />
+                            <MenuFlyoutItem Text="Purple" Tag="Purple" Click="Color_Click" />
+                            <MenuFlyoutItem Text="Red" Tag="Red" Click="Color_Click" />
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+                <ToggleButton Style="{StaticResource ToolToggle}" ToolTipService.ToolTip="Keep window on top"
+                              IsChecked="{x:Bind ViewModel.AlwaysOnTop, Mode=TwoWay}">
+                    <FontIcon Glyph="&#xE840;" FontSize="16" />
+                </ToggleButton>
+                <Button Style="{StaticResource ToolBtn}" ToolTipService.ToolTip="Undo (Ctrl+Z)"
+                        Command="{x:Bind ViewModel.UndoCommand}">
+                    <FontIcon Glyph="&#xE7A7;" FontSize="16" />
+                </Button>
+
+                <Border Width="1" Margin="4,4" Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+
+                <Button Style="{StaticResource ToolBtn}" ToolTipService.ToolTip="Remove all items"
+                        Command="{x:Bind ViewModel.EmptyCommand}">
+                    <FontIcon Glyph="&#xE74D;" FontSize="16" />
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Notices: first-run tip + restored-from-session (mid mode only) -->
+        <StackPanel Grid.Row="3" Visibility="{x:Bind helpers:Conv.Vis(ViewModel.IsMid), Mode=OneWay}">
+            <InfoBar Margin="8,4,8,0" Severity="Informational"
+                     IsOpen="{x:Bind ViewModel.FirstRunTip, Mode=OneWay}"
+                     Title="Welcome to Bucket"
+                     Message="Drag or paste files, text, images and links here. Drag items out to copy them. Shake the mouse, or press Ctrl+Shift+B, to summon a bucket anytime."
+                     CloseButtonClick="FirstRunTip_Close" />
+            <InfoBar Margin="8,4,8,0" Severity="Informational"
+                     IsOpen="{x:Bind ViewModel.RestoredFromSession, Mode=OneWay}"
+                     Title="Restored from last session"
+                     Message="These references were restored. Nothing has been copied or moved."
+                     CloseButtonClick="RestoreInfo_Close" />
+        </StackPanel>
+
+        <!-- Detailed-view column header -->
+        <Grid Grid.Row="4" x:Name="DetailHeader" Padding="14,4,14,4" ColumnSpacing="8"
+              Visibility="{x:Bind helpers:Conv.VisAnd(ViewModel.IsMid, ViewModel.IsDetailed), Mode=OneWay}"
+              Background="{ThemeResource SubtleFillColorSecondaryBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="22" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="110" />
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="130" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" Text="Name" Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            <TextBlock Grid.Column="2" Text="Type" Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            <TextBlock Grid.Column="3" Text="Size" Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" HorizontalAlignment="Right" />
+            <TextBlock Grid.Column="4" Text="Modified" Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+        </Grid>
+
+        <!-- Content: filter + item list + drop target + overlays -->
+        <Grid Grid.Row="5" x:Name="ContentArea" AllowDrop="True" Background="Transparent"
+              DragEnter="Content_DragEnter" DragOver="Content_DragOver"
+              DragLeave="Content_DragLeave" Drop="Content_Drop">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBox Grid.Row="0" Margin="8,4,8,2" PlaceholderText="Filter items…"
+                     Text="{x:Bind ViewModel.FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Visibility="{x:Bind helpers:Conv.VisAnd(ViewModel.ShowFilter, ViewModel.IsMid), Mode=OneWay}" />
+
+            <ListView x:Name="ItemsView" Grid.Row="1" SelectionMode="Extended" Padding="8,2,8,8" Background="Transparent"
+                      ItemsSource="{x:Bind ViewModel.DisplayItems, Mode=OneWay}"
+                      Visibility="{x:Bind helpers:Conv.Vis(ViewModel.IsMid), Mode=OneWay}"
+                      ItemTemplate="{StaticResource CompactTemplate}"
+                      CanDragItems="True" CanReorderItems="{x:Bind ViewModel.CanReorder, Mode=OneWay}" AllowDrop="True"
+                      DragItemsStarting="ItemsView_DragItemsStarting"
+                      DragOver="ItemsView_DragOver" Drop="ItemsView_Drop"
+                      DoubleTapped="ItemsView_DoubleTapped"
+                      SelectionChanged="ItemsView_SelectionChanged"
+                      RightTapped="ItemsView_RightTapped">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="0,1" />
+                        <Setter Property="Padding" Value="6,2" />
+                        <Setter Property="MinHeight" Value="0" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Open" Click="OpenItem_Click">
+                            <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE8E5;" /></MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Reveal in File Explorer" Click="RevealItem_Click">
+                            <MenuFlyoutItem.Icon><FontIcon Glyph="&#xEC50;" /></MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="Copy path" Click="CopyPath_Click">
+                            <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE8C8;" /></MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator />
+                        <MenuFlyoutItem Text="Remove" Click="RemoveItem_Click">
+                            <MenuFlyoutItem.Icon><SymbolIcon Symbol="Delete" /></MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </ListView.ContextFlyout>
+            </ListView>
+
+            <StackPanel x:Name="EmptyState" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Spacing="8" Padding="16" IsHitTestVisible="False"
+                        Visibility="{x:Bind helpers:Conv.VisAnd(ViewModel.IsEmpty, ViewModel.IsMid), Mode=OneWay}">
+                <FontIcon Glyph="&#xE7C3;" FontSize="32" Foreground="{ThemeResource TextFillColorDisabledBrush}" />
+                <TextBlock Text="Drop files here" HorizontalAlignment="Center"
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            </StackPanel>
+
+            <!-- Compact mode: big drop target showing the count; drag/drop/double-click. -->
+            <Grid x:Name="CompactPanel" Grid.RowSpan="2" Visibility="{x:Bind helpers:Conv.Vis(ViewModel.IsCompact), Mode=OneWay}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="2">
+                    <Image Width="48" Height="48" Margin="0,0,0,2" HorizontalAlignment="Center"
+                           Source="{x:Bind TitleIcon.Source, Mode=OneWay}" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="4">
+                        <TextBlock Text="{x:Bind ViewModel.CountNumber, Mode=OneWay}"
+                                   Style="{StaticResource TitleTextBlockStyle}"
+                                   Foreground="{x:Bind ViewModel.AccentBrush, Mode=OneWay}" />
+                        <TextBlock Text="{x:Bind ViewModel.CountNoun, Mode=OneWay}" VerticalAlignment="Bottom"
+                                   Margin="0,0,0,4" Style="{StaticResource CaptionTextBlockStyle}"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+            <Border x:Name="DropHint" Grid.RowSpan="2" Visibility="Collapsed" Margin="6" CornerRadius="8"
+                    Background="{x:Bind ViewModel.AccentBrush, Mode=OneWay}" Opacity="0.18"
+                    BorderBrush="{x:Bind ViewModel.AccentBrush, Mode=OneWay}" BorderThickness="2"
+                    IsHitTestVisible="False" />
+
+            <Grid x:Name="BusyOverlay" Grid.RowSpan="2" Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  Visibility="{x:Bind helpers:Conv.Vis(ViewModel.IsBusy), Mode=OneWay}">
+                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+                        CornerRadius="8" Padding="16" MaxWidth="320"
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="Transferring…" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                        <ProgressBar Value="{x:Bind ViewModel.ProgressValue, Mode=OneWay}"
+                                     Maximum="{x:Bind ViewModel.ProgressMax, Mode=OneWay}" />
+                        <TextBlock Text="{x:Bind ViewModel.ProgressText, Mode=OneWay}" Opacity="0.7"
+                                   TextTrimming="CharacterEllipsis" FontSize="12" />
+                        <Button Content="Cancel" HorizontalAlignment="Right"
+                                Command="{x:Bind ViewModel.CancelOperationCommand}" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!-- Status bar -->
+        <Border Grid.Row="6" Padding="12,4" Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+                Visibility="{x:Bind helpers:Conv.Vis(ViewModel.IsMid), Mode=OneWay}">
+            <Grid>
+                <TextBlock Text="{x:Bind ViewModel.CountText, Mode=OneWay}"
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock Text="{x:Bind ViewModel.TotalSizeText, Mode=OneWay}" HorizontalAlignment="Right"
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
