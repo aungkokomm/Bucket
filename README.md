@@ -19,9 +19,11 @@
 
 <!-- Add your screenshots to the docs/ folder and they'll appear here. -->
 <p align="center">
-  <img src="docs/screenshot-mid.png" alt="Bucket — working view" width="460">
-  &nbsp;&nbsp;
-  <img src="docs/screenshot-compact.png" alt="Bucket — compact view" width="180">
+ <img width="605" height="135" alt="image" src="https://github.com/user-attachments/assets/4689f1e4-af6e-4bf2-aa04-d26ad0fe7072" />
+
+
+  <img width="405" height="322" alt="image" src="https://github.com/user-attachments/assets/be9b0995-e838-442a-aad6-79ed305e621a" />
+
 </p>
 
 ---
