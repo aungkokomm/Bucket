@@ -53,6 +53,12 @@ Need another? One click spins up a fresh bucket in the next colour:
 
 <p align="center"><b>🔵 Blue → 🟢 Green → 🟠 Orange → 🟣 Purple → 🔴 Red</b></p>
 
+> ### 💡 Mid-collect and a new idea hits?
+> You're busy filling one bucket when you spot a *completely different* batch you need to grab — right
+> now, before it slips your mind. Don't break your flow to deal with it: just open another bucket, drop
+> the new things in, and carry on. **Your job is to spot and grab; the buckets hold on to everything
+> else.** One idea, one bucket — as many as the moment needs.
+
 It turns "I'm juggling files" into "I have a tidy, colour-coded station for each thing I'm doing."
 
 ---
