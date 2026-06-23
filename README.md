@@ -1,11 +1,6 @@
 <h1 align="center">🪣 Bucket</h1>
 
-<p align="center"><b>A fast, portable staging shelf for moving files around Windows.</b></p>
-
-<p align="center">
-  Gather files, folders, text, images and links from anywhere into a little always-on-top bucket —
-  then copy, move, zip, or drag them out wherever you need. Bucket never touches your files until you say so.
-</p>
+<p align="center"><b>The drop-shelf for Windows. Pile things in now, deal with them later.</b></p>
 
 <p align="center">
   <a href="https://github.com/aungkokomm/Bucket/releases/latest"><img alt="Download" src="https://img.shields.io/badge/Download-Latest%20Release-2F6FED?style=for-the-badge"></a>
@@ -14,136 +9,129 @@
 </p>
 <img width="1536" height="1024" alt="buket_banner" src="https://github.com/user-attachments/assets/c464c703-bb59-49e9-8278-8f567e2f1156" />
 
----
-
-## 📸 Screenshots
-
-<!-- Add your screenshots to the docs/ folder and they'll appear here. -->
 <p align="center">
- <img width="605" height="135" alt="image" src="https://github.com/user-attachments/assets/4689f1e4-af6e-4bf2-aa04-d26ad0fe7072" />
-
-
-  <img width="405" height="322" alt="image" src="https://github.com/user-attachments/assets/be9b0995-e838-442a-aad6-79ed305e621a" />
-
+  <img width="605" alt="Bucket toolbar" src="https://github.com/user-attachments/assets/4689f1e4-af6e-4bf2-aa04-d26ad0fe7072" />
+  <br><br>
+  <img width="405" alt="Bucket window" src="https://github.com/user-attachments/assets/be9b0995-e838-442a-aad6-79ed305e621a" />
 </p>
 
 ---
 
-## Why Bucket?
+## You know this dance
 
-Moving files on Windows means juggling Explorer windows: open the source, open the destination, drag,
-repeat. Bucket gives you a **temporary shelf** to collect things from many places, then deposit them in
-one move — copy, move, zip, or drag straight into another app.
+You're gathering files for an email, a report, a backup. A few are on the Desktop. A couple are in
+Downloads. One's buried three folders deep. So you open Explorer windows, line them up side by side,
+drag carefully, and hope nothing lands in the wrong place.
 
-It's the kind of "drop‑shelf" that's been a staple on macOS (Dropover, Yoink). Bucket brings it to
-Windows — **native, portable, and free**.
+**Bucket replaces that whole dance with a little shelf that floats on top of everything.**
 
-> **Your files are safe.** Adding something to a bucket only stores a *reference*. Nothing is copied,
-> moved, renamed, or deleted until **you** choose Copy / Move / Export.
+As you come across things you want, just toss them into the bucket — a file here, a folder there, a
+screenshot, a line of text, a link. They wait there in a tidy pile. When you're ready, send the whole
+pile somewhere in **one move**: copy it to a folder, zip it up, or drag it straight into another app.
 
-## ✨ Features
-
-**Collect anything**
-- Drag in, paste (`Ctrl+V`), or use the Add button
-- Accepts **files, folders, text snippets, images, and links** — text/images/links are saved as files for you
-- **Shake the mouse** to summon a bucket under your cursor
-- Optional **screen‑edge catcher** — a tab on the edge you can drop onto
-- Global hotkey **`Ctrl+Shift+B`** to bring a bucket up anywhere
-
-**Organize**
-- Multiple independent buckets, each a different colour
-- **Name** your buckets; jump to any of them from the tray
-- Four list views: Mini, Compact, Detailed, Gallery
-- **Compact ⇄ expanded** square modes that toggle with a smooth animation
-- Filter, reorder, single‑level Undo
-- Always‑on‑top toggle and adjustable **window transparency**
-
-**Deposit**
-- **Copy To…** / **Move To…** any folder, with conflict handling, progress, and cancel
-- **Drag out** to Explorer or any app (drop = copy, `Shift` = move)
-- **Quick Destinations** — pin folders for one‑click sends
-- **Export transforms:** Copy as **.zip**, **flatten** subfolders, or **batch‑rename & copy**
-- Open / Reveal in Explorer / Copy path on any item
-
-**Stays out of the way**
-- Lives in the **system tray**; closing the last window tucks it away instead of quitting
-- No installer prerequisites, no background services, no databases
-- Single per‑user install, no admin required
-
-## ⬇️ Install
-
-1. Download **`Bucket-Setup-1.0.0.exe`** from the [latest release](https://github.com/aungkokomm/Bucket/releases/latest).
-2. Run it. It installs per‑user (no admin prompt).
-3. Launch **Bucket** from the Start menu.
-
-> Bucket isn't code‑signed, so Windows SmartScreen may show *"Windows protected your PC."*
-> Click **More info → Run anyway**. (It's an unsigned indie app, not malware.)
-
-## 🚀 Quick start
-
-| Do this | To… |
-|---|---|
-| Drag files onto a bucket | Stage them |
-| **Shake the mouse** | Summon a bucket under the cursor |
-| Press **`Ctrl+Shift+B`** | Show a bucket from anywhere |
-| Drag items **out** to a folder | Copy them there ( `Shift` = move ) |
-| **Copy To… / Move To…** | Send everything to a folder |
-| **Export ▸ Copy as ZIP** | Pack the bucket into one `.zip` |
-| Right‑click the title bar | Rename, Settings, Minimize to tray, Close |
-| Double‑click the title bar / chevron | Toggle compact ⇄ expanded |
-
-## ⚙️ Settings
-
-Right‑click a bucket's title bar → **Settings…**
-
-- **Keep running in the system tray** — closing the last bucket hides it instead of quitting
-- **Restore buckets on next launch** — re‑open buckets that still had items (references only)
-- **Shake to summon** — toggle the shake gesture
-- **Screen‑edge catcher** — show the edge drop tab (off by default)
-- **Window transparency** — see‑through level for bucket windows
-
-## ⌨️ Shortcuts
-
-| Shortcut | Action |
-|---|---|
-| `Ctrl+Shift+B` | Summon / show a bucket (global) |
-| `Ctrl+V` | Paste into the bucket |
-| `Ctrl+N` | New bucket |
-| `Ctrl+Z` | Undo last remove/empty |
-| `Delete` | Remove selected items |
-
-## 🛠️ Build from source
-
-**Requirements:** Windows 10/11, Visual Studio 2022+ with the **.NET desktop** workload,
-.NET 10 SDK, and the WinUI / Windows App SDK tooling.
-
-```powershell
-# Clone
-git clone https://github.com/aungkokomm/Bucket.git
-cd Bucket
-
-# Build & run (debug): open Bucket.csproj in Visual Studio and press F5,
-# or from the CLI:
-msbuild Bucket.csproj /p:Configuration=Debug /p:Platform=x64 /t:Build
-
-# Build the portable installer (requires Inno Setup 6)
-pwsh -File tools\build_installer.ps1
-#   → produces dist\Bucket-Setup-1.0.0.exe
-```
-
-The app ships as an **unpackaged, self‑contained** WinUI 3 build (no runtime prerequisites),
-wrapped by an [Inno Setup](https://jrsoftware.org/isinfo.php) installer.
-
-## 🧰 Tech
-
-- **C# / .NET 10**, **WinUI 3** (Windows App SDK), MVVM with CommunityToolkit.Mvvm
-- Self‑contained, unpackaged deployment; Inno Setup for distribution
-- No telemetry, no network calls, no background services
-
-## 📄 License
-
-[MIT](LICENSE) © Aung Ko Ko
+> ### 🛟 Your files stay exactly where they are
+> Dropping something into a bucket just makes a little pointer to it — **nothing is copied, moved,
+> renamed, or deleted** until *you* choose to. Change your mind? Empty the bucket and your files
+> haven't budged.
 
 ---
 
-<p align="center"><i>Made for people who move a lot of files.</i></p>
+## What you can do with it
+
+### 🧺 Collect from anywhere
+Drag things in, or paste them (`Ctrl+V`). Bucket takes **files, folders, text, images, and links** —
+and turns loose text, images, and links into real files so you can use them later. Need a bucket
+*right now*? **Give your mouse a shake** and one appears under your cursor, or press **`Ctrl+Shift+B`**
+from any app.
+
+### 🎨 Keep separate piles separate
+Open as many buckets as you like — one for "email to Sarah", one for "move to the NAS", one for
+"this week's photos". Each gets its **own colour** and a **name** you choose, and shrinks down to a
+neat little square when you want it out of the way.
+
+### 📤 Send it wherever — your way
+- **Copy** or **move** the whole bucket to any folder, with a progress bar and no surprises
+- **Drag the pile out** to Explorer or any app — drop to copy, hold **Shift** to move
+- Pin your favourite folders as **one-click destinations**
+- Or transform on the way out: pack everything into a **`.zip`**, **flatten** a mess of subfolders
+  into one place, or **rename them in sequence** as you copy
+
+### 🫥 Stays out of your way
+Bucket lives quietly in the system tray. Close the last window and it just tucks away instead of
+quitting — your piles are still there when you come back. It's portable, installs in seconds without
+admin rights, and never phones home.
+
+---
+
+## Get it
+
+1. **[Download the latest release](https://github.com/aungkokomm/Bucket/releases/latest)** and run the installer.
+2. It installs just for you — **no admin prompt**, no fuss.
+3. Open **Bucket** from the Start menu and drag your first file in. 🎉
+
+> 💡 Because Bucket is a free indie app (not signed with a paid certificate), Windows may show a blue
+> *"Windows protected your PC"* screen the first time. Click **More info → Run anyway** — it's safe.
+
+---
+
+## The everyday moves
+
+| You do this | …and Bucket does this |
+|---|---|
+| Drag files onto a bucket | Adds them to the pile (your originals stay put) |
+| Shake the mouse | Pops a bucket up under your cursor |
+| Press `Ctrl+Shift+B` | Brings a bucket forward from anywhere |
+| Drag the pile **out** to a folder | Copies it there (hold **Shift** to move instead) |
+| **Copy To… / Move To…** | Sends everything to a folder you pick |
+| **Export ▸ Copy as ZIP** | Packs the whole bucket into one `.zip` |
+| Double-click the title bar | Toggles between the small square and the full view |
+| Right-click the title bar | Rename, Settings, Minimize to tray, About |
+
+**Handy shortcuts:** `Ctrl+V` paste · `Ctrl+N` new bucket · `Ctrl+Z` undo · `Delete` remove selected
+
+---
+
+## A few things you can tweak
+
+Right-click a bucket's title bar → **Settings**:
+
+- **Keep running in the tray** so closing the last bucket doesn't quit the app
+- **Reopen your buckets** the next time you launch (pointers only — your files are untouched)
+- Turn the **shake-to-summon** gesture on or off
+- Show a **screen-edge tab** you can drop onto (off by default)
+- Make bucket windows a little **see-through** so you can keep an eye on what's behind them
+
+---
+
+<details>
+<summary><b>For developers</b> — build it yourself</summary>
+
+<br>
+
+Bucket is a native **C# / WinUI 3** app (.NET 10, Windows App SDK), built with the
+CommunityToolkit MVVM toolkit. It ships as a self-contained, unpackaged build — no runtime
+prerequisites — wrapped in an [Inno Setup](https://jrsoftware.org/isinfo.php) installer. No telemetry,
+no network calls, no background services.
+
+```powershell
+git clone https://github.com/aungkokomm/Bucket.git
+cd Bucket
+
+# Run it (debug): open Bucket.csproj in Visual Studio and press F5, or:
+msbuild Bucket.csproj /p:Configuration=Debug /p:Platform=x64 /t:Build
+
+# Build the portable installer (needs Inno Setup 6):
+pwsh -File tools\build_installer.ps1   # → dist\Bucket-Setup-1.0.0.exe
+```
+
+**Requirements:** Windows 10/11, Visual Studio 2022+ with the **.NET desktop** workload, the .NET 10
+SDK, and the WinUI / Windows App SDK tooling.
+
+</details>
+
+---
+
+<p align="center">
+  <b>Made for people who move a lot of files.</b><br>
+  MIT licensed · © 2026 Aung Ko Ko · <a href="https://aungkokomm.github.io/">more of my apps</a>
+</p>
