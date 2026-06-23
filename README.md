@@ -1,6 +1,9 @@
 <h1 align="center">🪣 Bucket</h1>
 
-<p align="center"><b>The drop-shelf for Windows. Pile things in now, deal with them later.</b></p>
+<p align="center">
+  <b>The colour-coded drop-shelf for Windows.</b><br>
+  Run a separate bucket for every job — pile things in now, deal with them later.
+</p>
 
 <p align="center">
   <a href="https://github.com/aungkokomm/Bucket/releases/latest"><img alt="Download" src="https://img.shields.io/badge/Download-Latest%20Release-2F6FED?style=for-the-badge"></a>
@@ -36,18 +39,31 @@ pile somewhere in **one move**: copy it to a folder, zip it up, or drag it strai
 
 ---
 
-## What you can do with it
+## 🌈 One pile per job, each its own colour — *this* is the difference
+
+Every other drop-shelf hands you **one** pile, and everything you grab lands in the same heap. Bucket
+gives you a **whole set of colour-coded buckets, side by side**.
+
+Run a **blue** bucket for "email to Sarah", a **green** one for "back up to the NAS", an **orange**
+one for "this week's photos" — all on screen at the same time. The **colour is the label**: you know
+at a glance which pile is which, and things from different jobs never get mixed together. Give each one
+a name too, and jump straight to any open bucket from the system tray.
+
+Need another? One click spins up a fresh bucket in the next colour:
+
+<p align="center"><b>🔵 Blue → 🟢 Green → 🟠 Orange → 🟣 Purple → 🔴 Red</b></p>
+
+It turns "I'm juggling files" into "I have a tidy, colour-coded station for each thing I'm doing."
+
+---
+
+## What else you can do
 
 ### 🧺 Collect from anywhere
 Drag things in, or paste them (`Ctrl+V`). Bucket takes **files, folders, text, images, and links** —
 and turns loose text, images, and links into real files so you can use them later. Need a bucket
 *right now*? **Give your mouse a shake** and one appears under your cursor, or press **`Ctrl+Shift+B`**
 from any app.
-
-### 🎨 Keep separate piles separate
-Open as many buckets as you like — one for "email to Sarah", one for "move to the NAS", one for
-"this week's photos". Each gets its **own colour** and a **name** you choose, and shrinks down to a
-neat little square when you want it out of the way.
 
 ### 📤 Send it wherever — your way
 - **Copy** or **move** the whole bucket to any folder, with a progress bar and no surprises
