@@ -47,7 +47,8 @@ No more window-juggling. No more dragging across the screen holding your breath.
 own pace; Bucket holds everything until you decide what's next.**
 
 > 💬 On Mac, people happily pay for tools like this — *Yoink*, *Dropover*. On Windows it's been
-> strangely missing. So I built one, made it native and portable, and gave it away for free.
+> strangely, some paid tools exist with very limited fuctinaliy, and some free tools are age old. 
+So I built one, made it native and portable, and gave it away for free.
 
 > ### 🛟 …and it never touches your files
 > Dropping something into a bucket just creates a little pointer to it — **nothing is copied, moved,
