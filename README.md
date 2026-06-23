@@ -1,8 +1,8 @@
 <h1 align="center">🪣 Bucket</h1>
 
 <p align="center">
-  <b>The colour-coded drop-shelf for Windows.</b><br>
-  Run a separate bucket for every job — pile things in now, deal with them later.
+  <b>Ever opened five File Explorer windows just to gather a handful of files?</b><br>
+  There's a calmer way to do it — and almost nobody knows this kind of tool exists.
 </p>
 
 <p align="center">
@@ -20,22 +20,39 @@
 
 ---
 
-## You know this dance
+## Be honest — this is how moving files actually goes
 
-You're gathering files for an email, a report, a backup. A few are on the Desktop. A couple are in
-Downloads. One's buried three folders deep. So you open Explorer windows, line them up side by side,
-drag carefully, and hope nothing lands in the wrong place.
+You need to round up a few files. One's on the Desktop. Two are in Downloads. Another is buried four
+folders deep in last year's project. So you open a File Explorer window. Then another. You shrink them,
+line them up, and start dragging — *carefully*, because one slip drops a file in the wrong place.
 
-**Bucket replaces that whole dance with a little shelf that floats on top of everything.**
+Halfway through, you lose track of which window was the destination. You spot one more file and… wait,
+where was it supposed to go again? By the time you're done you've opened six windows, dragged the same
+file twice, and you *still* have a nagging feeling you forgot one.
 
-As you come across things you want, just toss them into the bucket — a file here, a folder there, a
-screenshot, a line of text, a link. They wait there in a tidy pile. When you're ready, send the whole
-pile somewhere in **one move**: copy it to a folder, zip it up, or drag it straight into another app.
+**It doesn't have to be like this. You've just never been shown the alternative.**
 
-> ### 🛟 Your files stay exactly where they are
-> Dropping something into a bucket just makes a little pointer to it — **nothing is copied, moved,
-> renamed, or deleted** until *you* choose to. Change your mind? Empty the bucket and your files
-> haven't budged.
+---
+
+## Meet Bucket — the shelf your desktop was always missing
+
+Bucket is a tiny window that floats on top of everything, like a sticky note you can drop files into.
+
+See something you want? **Toss it in the bucket and keep going.** A file, a folder, a screenshot, a
+paragraph of text, a link — anything. It waits there in a neat little pile while you get on with what
+you were doing. When you're ready, send the whole pile somewhere in **one move**: copy it to a folder,
+zip it up, or drag it straight into an email or chat.
+
+No more window-juggling. No more dragging across the screen holding your breath. **You collect at your
+own pace; Bucket holds everything until you decide what's next.**
+
+> 💬 On Mac, people happily pay for tools like this — *Yoink*, *Dropover*. On Windows it's been
+> strangely missing. So I built one, made it native and portable, and gave it away for free.
+
+> ### 🛟 …and it never touches your files
+> Dropping something into a bucket just creates a little pointer to it — **nothing is copied, moved,
+> renamed, or deleted** unless you ask. Change your mind? Empty the bucket and your files never moved an
+> inch. (Which means it's completely safe to try.)
 
 ---
 
@@ -63,29 +80,44 @@ It turns "I'm juggling files" into "I have a tidy, colour-coded station for each
 
 ---
 
-## What else you can do
+## "Wait… is this me?"
+
+If any of these sound familiar, Bucket will feel like it read your mind:
+
+- 📎 You attach files to emails and end up with a dozen windows open just to find them
+- 🗂️ You're forever shuffling files between folders, drives, or a network/NAS
+- 🖼️ You sort photos and screenshots into the right places
+- 🔎 You research on the web and collect bits as you go — images, links, quotes
+- 🎒 You back things up by hand and want everything gathered first
+- 🎬 You make videos, docs, or slide decks and pull assets from all over
+
+**You don't need to be "techy."** If you use Windows and you move files, this is for you.
+
+---
+
+## What else it does (once you're hooked)
 
 ### 🧺 Collect from anywhere
 Drag things in, or paste them (`Ctrl+V`). Bucket takes **files, folders, text, images, and links** —
-and turns loose text, images, and links into real files so you can use them later. Need a bucket
-*right now*? **Give your mouse a shake** and one appears under your cursor, or press **`Ctrl+Shift+B`**
-from any app.
+and quietly turns loose text, images, and links into real files you can reuse. Need a bucket *right
+now*? **Give your mouse a shake** and one appears under your cursor, or press **`Ctrl+Shift+B`** from
+any app.
 
 ### 📤 Send it wherever — your way
-- **Copy** or **move** the whole bucket to any folder, with a progress bar and no surprises
+- **Copy** or **move** the whole pile to any folder, with a progress bar and no surprises
 - **Drag the pile out** to Explorer or any app — drop to copy, hold **Shift** to move
 - Pin your favourite folders as **one-click destinations**
 - Or transform on the way out: pack everything into a **`.zip`**, **flatten** a mess of subfolders
   into one place, or **rename them in sequence** as you copy
 
 ### 🫥 Stays out of your way
-Bucket lives quietly in the system tray. Close the last window and it just tucks away instead of
-quitting — your piles are still there when you come back. It's portable, installs in seconds without
-admin rights, and never phones home.
+Bucket lives quietly in the system tray. Close the last window and it simply tucks away instead of
+quitting — your piles are right where you left them when you come back. It's portable, installs in
+seconds without admin rights, and never phones home.
 
 ---
 
-## Get it
+## Try it in 30 seconds
 
 1. **[Download the latest release](https://github.com/aungkokomm/Bucket/releases/latest)** and run the installer.
 2. It installs just for you — **no admin prompt**, no fuss.
@@ -96,7 +128,32 @@ admin rights, and never phones home.
 
 ---
 
-## The everyday moves
+## Questions you might be asking
+
+**Is it safe? Will it mess up my files?**
+Completely safe. Bucket only stores *pointers* to your files — it never moves, copies, renames, or
+deletes anything until you choose an action. Empty a bucket and nothing happened to the originals.
+
+**Is it really free?**
+Yes — free and open-source (MIT). No account, no subscription, no upsell, ever.
+
+**Will it slow down my PC?**
+No. It's a small native app that sits quietly in the tray and does nothing until you use it. No
+background services, no telemetry, no calling home.
+
+**Do I have to learn anything?**
+If you can drag a file, you already know how to use it. Everything else is a bonus you'll stumble onto.
+
+**I've never needed something like this — do I?**
+Almost no one *knows* they need it… until about a week in, when going back to juggling Explorer windows
+feels unthinkable. It's free — give it a day.
+
+---
+
+<details>
+<summary><b>📋 Handy reference</b> — shortcuts, gestures &amp; settings</summary>
+
+<br>
 
 | You do this | …and Bucket does this |
 |---|---|
@@ -109,31 +166,22 @@ admin rights, and never phones home.
 | Double-click the title bar | Toggles between the small square and the full view |
 | Right-click the title bar | Rename, Settings, Minimize to tray, About |
 
-**Handy shortcuts:** `Ctrl+V` paste · `Ctrl+N` new bucket · `Ctrl+Z` undo · `Delete` remove selected
+**Shortcuts:** `Ctrl+V` paste · `Ctrl+N` new bucket · `Ctrl+Z` undo · `Delete` remove selected
 
----
+**In Settings** (right-click the title bar → Settings): keep running in the tray, reopen your buckets
+on next launch, toggle shake-to-summon, show a screen-edge drop tab, and make windows see-through.
 
-## A few things you can tweak
-
-Right-click a bucket's title bar → **Settings**:
-
-- **Keep running in the tray** so closing the last bucket doesn't quit the app
-- **Reopen your buckets** the next time you launch (pointers only — your files are untouched)
-- Turn the **shake-to-summon** gesture on or off
-- Show a **screen-edge tab** you can drop onto (off by default)
-- Make bucket windows a little **see-through** so you can keep an eye on what's behind them
-
----
+</details>
 
 <details>
-<summary><b>For developers</b> — build it yourself</summary>
+<summary><b>🛠️ For developers</b> — build it yourself</summary>
 
 <br>
 
-Bucket is a native **C# / WinUI 3** app (.NET 10, Windows App SDK), built with the
-CommunityToolkit MVVM toolkit. It ships as a self-contained, unpackaged build — no runtime
-prerequisites — wrapped in an [Inno Setup](https://jrsoftware.org/isinfo.php) installer. No telemetry,
-no network calls, no background services.
+Bucket is a native **C# / WinUI 3** app (.NET 10, Windows App SDK), built with the CommunityToolkit
+MVVM toolkit. It ships as a self-contained, unpackaged build — no runtime prerequisites — wrapped in an
+[Inno Setup](https://jrsoftware.org/isinfo.php) installer. No telemetry, no network calls, no
+background services.
 
 ```powershell
 git clone https://github.com/aungkokomm/Bucket.git
@@ -154,6 +202,7 @@ SDK, and the WinUI / Windows App SDK tooling.
 ---
 
 <p align="center">
-  <b>Made for people who move a lot of files.</b><br>
-  MIT licensed · © 2026 Aung Ko Ko · <a href="https://aungkokomm.github.io/">more of my apps</a>
+  <b>Stop juggling windows. Start dropping things in a bucket.</b><br>
+  <a href="https://github.com/aungkokomm/Bucket/releases/latest">⬇ Download Bucket</a> — free &amp; open-source<br>
+  <sub>MIT licensed · © 2026 Aung Ko Ko · <a href="https://aungkokomm.github.io/">more of my apps</a></sub>
 </p>
