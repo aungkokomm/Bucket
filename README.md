@@ -9,7 +9,7 @@
   <a href="https://github.com/aungkokomm/Bucket/releases/latest"><img alt="Download" src="https://img.shields.io/badge/Download-Latest%20Release-2F6FED?style=for-the-badge"></a>
   <img alt="Platform" src="https://img.shields.io/badge/Windows%2010%2F11-x64-555?style=for-the-badge">
   <img alt="License" src="https://img.shields.io/badge/License-MIT-1FA855?style=for-the-badge">
-  ![GitHub all releases](https://img.shields.io/github/downloads/aungkokomm/Bucket/total)
+  
 
 </p>
 <img width="1536" height="1024" alt="buket_banner" src="https://github.com/user-attachments/assets/c464c703-bb59-49e9-8278-8f567e2f1156" />
