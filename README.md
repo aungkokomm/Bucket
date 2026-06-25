@@ -7,6 +7,7 @@
 
 <p align="center">
   <a href="https://github.com/aungkokomm/Bucket/releases/latest"><img alt="Download" src="https://img.shields.io/badge/Download-Latest%20Release-2F6FED?style=for-the-badge"></a>
+  <a href="https://github.com/aungkokomm/Bucket/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/aungkokomm/Bucket/total?style=for-the-badge&label=Downloads&color=8A3FFC"></a>
   <img alt="Platform" src="https://img.shields.io/badge/Windows%2010%2F11-x64-555?style=for-the-badge">
   <img alt="License" src="https://img.shields.io/badge/License-MIT-1FA855?style=for-the-badge">
   
