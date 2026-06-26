@@ -4,7 +4,7 @@
 ; Then compile:  ISCC.exe installer\Bucket.iss
 
 #define AppName    "Bucket"
-#define AppVersion "1.0.0"
+#define AppVersion "1.0.1"
 #define Publisher  "Aung Ko Ko"
 #define ExeName    "Bucket.exe"
 #define SrcDir     "..\publish"

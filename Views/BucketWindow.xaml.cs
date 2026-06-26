@@ -363,7 +363,7 @@ public sealed partial class BucketWindow : Window, IBucketHost
             FontSize = 20,
             FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
         });
-        titleStack.Children.Add(new TextBlock { Text = "Version 1.0.0", FontSize = 12, Opacity = 0.7 });
+        titleStack.Children.Add(new TextBlock { Text = "Version 1.0.1", FontSize = 12, Opacity = 0.7 });
         header.Children.Add(titleStack);
 
         var panel = new StackPanel { Spacing = 4, Width = 320 };

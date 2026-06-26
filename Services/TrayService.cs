@@ -88,27 +88,32 @@ public sealed class TrayService : IDisposable
 
     private nint WndProcImpl(nint hwnd, uint msg, nint wParam, nint lParam)
     {
-        switch (msg)
+        // Native callback — must never let an exception escape into the OS.
+        try
         {
-            case WM_TRAY:
-                // With NOTIFYICON_VERSION_4, LOWORD(lParam) is the event (NIN_SELECT
-                // for left-click, WM_CONTEXTMENU for right-click). Plain WM_*BUTTONUP
-                // is also handled for the pre-v4 case.
-                uint mouse = (uint)(lParam.ToInt64() & 0xFFFF);
-                Log($"tray msg 0x{mouse:X}");
-                if (mouse is WM_LBUTTONUP or NIN_SELECT or NIN_KEYSELECT)
-                    Ui(_manager.ShowOrCreate);
-                else if (mouse is WM_RBUTTONUP or WM_CONTEXTMENU)
-                    ShowMenu();
-                return 0;
-            case WM_HOTKEY:
-                if ((int)wParam == HotkeyId)
-                    Ui(_manager.ShowOrCreate);
-                return 0;
-            case WM_DESTROY:
-                PostQuitMessage(0);
-                return 0;
+            switch (msg)
+            {
+                case WM_TRAY:
+                    // With NOTIFYICON_VERSION_4, LOWORD(lParam) is the event (NIN_SELECT
+                    // for left-click, WM_CONTEXTMENU for right-click). Plain WM_*BUTTONUP
+                    // is also handled for the pre-v4 case.
+                    uint mouse = (uint)(lParam.ToInt64() & 0xFFFF);
+                    Log($"tray msg 0x{mouse:X}");
+                    if (mouse is WM_LBUTTONUP or NIN_SELECT or NIN_KEYSELECT)
+                        Ui(_manager.ShowOrCreate);
+                    else if (mouse is WM_RBUTTONUP or WM_CONTEXTMENU)
+                        ShowMenu();
+                    return 0;
+                case WM_HOTKEY:
+                    if ((int)wParam == HotkeyId)
+                        Ui(_manager.ShowOrCreate);
+                    return 0;
+                case WM_DESTROY:
+                    PostQuitMessage(0);
+                    return 0;
+            }
         }
+        catch (Exception ex) { CrashLog.Write("tray wndproc", ex); }
         return DefWindowProc(hwnd, msg, wParam, lParam);
     }
 
@@ -123,15 +128,21 @@ public sealed class TrayService : IDisposable
 
     private nint MouseHookProc(int code, nint wParam, nint lParam)
     {
-        if (code >= 0 && (uint)wParam == WM_MOUSEMOVE && AppSettings.ShakeToSummon)
+        // This runs on every mouse move; an escaping exception would crash the
+        // whole process, so it must never throw.
+        try
         {
-            MSLLHOOKSTRUCT data = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
-            if (DetectShake(data.pt.X, Environment.TickCount64))
+            if (code >= 0 && (uint)wParam == WM_MOUSEMOVE && AppSettings.ShakeToSummon)
             {
-                int x = data.pt.X, y = data.pt.Y;
-                Ui(() => _manager.SummonAt(x, y));
+                MSLLHOOKSTRUCT data = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
+                if (DetectShake(data.pt.X, Environment.TickCount64))
+                {
+                    int x = data.pt.X, y = data.pt.Y;
+                    Ui(() => _manager.SummonAt(x, y));
+                }
             }
         }
+        catch (Exception ex) { CrashLog.Write("mouse hook", ex); }
         return CallNextHookEx(0, code, wParam, lParam);
     }
 

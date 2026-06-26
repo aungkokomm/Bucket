@@ -16,6 +16,23 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+
+        // These crashes used to be silent and fatal. Log everything; for UI-thread
+        // exceptions also mark them handled so a single glitch (e.g. a control
+        // failing to realize, or a tooltip) no longer takes the whole app down.
+        UnhandledException += (_, e) =>
+        {
+            CrashLog.Write("UI thread", e.Exception, e.Message);
+            e.Handled = true;
+        };
+        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+            CrashLog.Write("AppDomain", e.ExceptionObject as Exception,
+                e.IsTerminating ? "terminating" : null);
+        System.Threading.Tasks.TaskScheduler.UnobservedTaskException += (_, e) =>
+        {
+            CrashLog.Write("Task", e.Exception);
+            e.SetObserved();
+        };
     }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
