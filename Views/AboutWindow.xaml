@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Window
+    x:Class="Bucket.Views.AboutWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="About Bucket"
+    mc:Ignorable="d">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <Grid Padding="28">
+        <StackPanel Spacing="12">
+            <StackPanel Orientation="Horizontal" Spacing="14">
+                <Image x:Name="AppIconImage" Width="56" Height="56" VerticalAlignment="Center" />
+                <StackPanel VerticalAlignment="Center" Spacing="1">
+                    <TextBlock Text="Bucket" Style="{StaticResource TitleTextBlockStyle}" />
+                    <TextBlock x:Name="VersionText"
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Text="A portable file-staging shelf for Windows."
+                       TextWrapping="Wrap" Margin="0,4,0,0" />
+
+            <StackPanel Spacing="0">
+                <HyperlinkButton Content="GitHub repository"
+                                 NavigateUri="https://github.com/aungkokomm/Bucket" Padding="0" />
+                <HyperlinkButton Content="More of my projects"
+                                 NavigateUri="https://aungkokomm.github.io/" Padding="0" />
+            </StackPanel>
+
+            <TextBlock Text="© 2026 Aung Ko Ko · MIT License"
+                       Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,4,0,0" />
+        </StackPanel>
+    </Grid>
+</Window>

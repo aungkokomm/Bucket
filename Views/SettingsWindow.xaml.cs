@@ -35,8 +35,11 @@ public sealed partial class SettingsWindow : Window
         RestoreToggle.IsOn = AppSettings.RestoreSessionEnabled;
         ShakeToggle.IsOn = AppSettings.ShakeToSummon;
         EdgeToggle.IsOn = AppSettings.EdgeCatcher;
-        OpacitySlider.Value = AppSettings.WindowOpacity;
-        OpacityValue.Text = $"{AppSettings.WindowOpacity}%";
+        // The slider is "transparency" (0 = fully opaque, the default); opacity is its
+        // complement. New install: opacity 100 → 0% transparency → slider truly at 0.
+        int transparency = 100 - AppSettings.WindowOpacity;
+        OpacitySlider.Value = transparency;
+        OpacityValue.Text = $"{transparency}%";
         _loading = false;
 
         if (Content is FrameworkElement root)
@@ -78,11 +81,12 @@ public sealed partial class SettingsWindow : Window
 
     private void OpacitySlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
     {
-        int percent = (int)e.NewValue;
-        OpacityValue.Text = $"{percent}%";
+        int transparency = (int)e.NewValue;
+        OpacityValue.Text = $"{transparency}%";
         if (_loading)
             return;
-        AppSettings.WindowOpacity = percent;
-        _manager.ApplyOpacityToAll(percent);
+        int opacity = 100 - transparency;
+        AppSettings.WindowOpacity = opacity;
+        _manager.ApplyOpacityToAll(opacity);
     }
 }

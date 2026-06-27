@@ -117,7 +117,7 @@
                             <TextBlock x:Name="OpacityValue" Grid.Column="1" VerticalAlignment="Center"
                                        Style="{StaticResource BodyStrongTextBlockStyle}" />
                         </Grid>
-                        <Slider x:Name="OpacitySlider" Minimum="40" Maximum="100" StepFrequency="1"
+                        <Slider x:Name="OpacitySlider" Minimum="0" Maximum="60" StepFrequency="1"
                                 TickFrequency="10" TickPlacement="Outside"
                                 ValueChanged="OpacitySlider_ValueChanged" />
                     </StackPanel>
