@@ -39,15 +39,15 @@ if (Test-Path $publishDir) { Remove-Item $publishDir -Recurse -Force }
 if ($LASTEXITCODE -ne 0) { throw "Publish failed (exit $LASTEXITCODE)." }
 if (-not (Test-Path (Join-Path $publishDir 'Assets\AppIcon.ico'))) { throw "Assets were not copied to publish output." }
 
-# Tidy the payload: drop the WinAppSDK localization (.mui) folders for languages we
-# don't ship, plus debug symbols and the crash-dump helper. This keeps the installed
-# folder neat (≈5 folders instead of ~90) and shrinks the download. Keep Assets and
-# the "Microsoft.UI.Xaml" controls-resources folder.
-Write-Host "==> Tidying payload (removing localization folders + debug files)..." -ForegroundColor Cyan
+# Tidy the payload: only remove debug symbols and the crash-dump helper.
+#
+# IMPORTANT: do NOT delete the WinAppSDK localization (.mui) folders. The app's
+# resources.pri still declares those languages, so on a localized Windows (e.g.
+# German) the resource loader looks for the matching .mui and throws
+# 0x80073B01 ("no MUI entry loaded") if it's missing — crashing the app on
+# tooltips, min/maximize, etc. Keeping them costs a few MB but works everywhere.
+Write-Host "==> Tidying payload (debug files only)..." -ForegroundColor Cyan
 $before = (Get-ChildItem $publishDir -Recurse -File).Count
-Get-ChildItem $publishDir -Directory |
-    Where-Object { $_.Name -match '^[A-Za-z]{2}(-[A-Za-z0-9]+){1,2}$' -or $_.Name -match '^[a-z]{2}$' } |
-    Remove-Item -Recurse -Force
 Get-ChildItem $publishDir -Recurse -Include *.pdb | Remove-Item -Force
 Remove-Item (Join-Path $publishDir 'createdump.exe') -Force -ErrorAction SilentlyContinue
 $after = (Get-ChildItem $publishDir -Recurse -File).Count
