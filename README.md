@@ -25,15 +25,18 @@
 
 ## Be honest — this is how moving files actually goes
 
-You need to round up a few files. One's on the Desktop. Two are in Downloads. Another is buried four
-folders deep in last year's project. So you open a File Explorer window. Then another. You shrink them,
-line them up, and start dragging — *carefully*, because one slip drops a file in the wrong place.
+You're collecting files for a USB drive, archive, or email.
 
-Halfway through, you lose track of which window was the destination. You spot one more file and… wait,
-where was it supposed to go again? By the time you're done you've opened six windows, dragged the same
-file twice, and you *still* have a nagging feeling you forgot one.
+One file is on your **Desktop**. Another is in **Downloads**. A few more are scattered across different folders.
 
-**It doesn't have to be like this. You've just never been shown the alternative.**
+So you open **File Explorer**. Then another window. Then another.
+
+Now you're dragging files between windows, trying not to drop them in the wrong place. Halfway through, you forget which window is the destination. You find another file and think, **"Where was I putting these again?"**
+
+By the time you're finished, your screen is cluttered with Explorer windows, you've revisited the same folders multiple times, and you're still not completely sure you collected everything.
+
+**We've all accepted this workflow. We shouldn't have to.**
+
 
 ---
 
