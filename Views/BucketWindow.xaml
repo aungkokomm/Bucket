@@ -274,6 +274,10 @@
                             <MenuFlyoutItem Text="Orange" Tag="Orange" Click="Color_Click" />
                             <MenuFlyoutItem Text="Purple" Tag="Purple" Click="Color_Click" />
                             <MenuFlyoutItem Text="Red" Tag="Red" Click="Color_Click" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem Text="Custom colour…" Click="CustomColor_Click">
+                                <MenuFlyoutItem.Icon><FontIcon Glyph="&#xE790;" /></MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
                         </MenuFlyout>
                     </Button.Flyout>
                 </Button>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Window
+    x:Class="Bucket.Views.ColorPickerWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Custom colour"
+    mc:Ignorable="d">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <!-- Row 0 (*) holds the (scrollable) picker; row 1 (Auto) pins the buttons so
+         they are always visible no matter how tall the ColorPicker renders. -->
+    <Grid Padding="16" RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollMode="Disabled" HorizontalScrollBarVisibility="Disabled">
+            <ColorPicker x:Name="Picker"
+                         IsAlphaEnabled="False"
+                         IsColorChannelTextInputVisible="True"
+                         IsHexInputVisible="True"
+                         ColorSpectrumShape="Box" />
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button x:Name="CancelButton" Content="Cancel" Click="Cancel_Click" MinWidth="88" />
+            <Button x:Name="UseButton" Content="Use colour" Click="Use_Click" MinWidth="88"
+                    Style="{StaticResource AccentButtonStyle}" />
+        </StackPanel>
+    </Grid>
+</Window>

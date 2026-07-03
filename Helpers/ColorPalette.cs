@@ -30,7 +30,29 @@ public static class ColorPalette
     };
 
     /// <summary>A medium tint of the color, for the title bar gradient's deep end.</summary>
-    public static Color ToHeader(BucketColor color) => Lerp(ToColor(color), Colors.White, 0.48);
+    public static Color ToHeader(BucketColor color) => HeaderFromAccent(ToColor(color));
+
+    // --- generic tints, for arbitrary (custom) accent colors ------------
+
+    /// <summary>Medium tint of any accent — the title bar gradient's deep end.</summary>
+    public static Color HeaderFromAccent(Color accent) => Lerp(accent, Colors.White, 0.48);
+
+    /// <summary>Light tint of any accent — the whole-window background.</summary>
+    public static Color BackgroundFromAccent(Color accent) => Lerp(accent, Colors.White, 0.86);
+
+    /// <summary>"#RRGGBB" for persistence.</summary>
+    public static string ToHex(Color c) => $"#{c.R:X2}{c.G:X2}{c.B:X2}";
+
+    /// <summary>Parses "#RRGGBB" (or "RRGGBB"); null if invalid.</summary>
+    public static Color? FromHex(string? hex)
+    {
+        if (string.IsNullOrWhiteSpace(hex))
+            return null;
+        string s = hex.TrimStart('#');
+        if (s.Length != 6 || !uint.TryParse(s, System.Globalization.NumberStyles.HexNumber, null, out uint v))
+            return null;
+        return Color.FromArgb(255, (byte)(v >> 16), (byte)(v >> 8), (byte)v);
+    }
 
     private static Color Lerp(Color a, Color b, double t) => Color.FromArgb(
         255,

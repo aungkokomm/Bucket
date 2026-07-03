@@ -9,6 +9,8 @@ public sealed class BucketState
     public List<string> Paths { get; set; } = new();
     public string Name { get; set; } = "";
     public BucketColor Color { get; set; } = BucketColor.Blue;
+    /// <summary>A custom accent as "#RRGGBB". When set, it overrides <see cref="Color"/>.</summary>
+    public string? CustomColor { get; set; }
     public ViewMode View { get; set; } = ViewMode.CompactList;
     public WindowMode Mode { get; set; } = WindowMode.Mid;
     public bool AlwaysOnTop { get; set; } = true;

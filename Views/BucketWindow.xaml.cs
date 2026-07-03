@@ -752,6 +752,22 @@ public sealed partial class BucketWindow : Window, IBucketHost
             ViewModel.SetColor(color);
     }
 
+    private ColorPickerWindow? _colorPicker;
+
+    private void CustomColor_Click(object sender, RoutedEventArgs e)
+    {
+        if (_colorPicker is not null)
+        {
+            _colorPicker.Activate();
+            return;
+        }
+        // Seed with the bucket's current accent.
+        Windows.UI.Color current = (ViewModel.AccentBrush as SolidColorBrush)?.Color ?? Colors.SteelBlue;
+        _colorPicker = new ColorPickerWindow(current, ViewModel.SetCustomColor);
+        _colorPicker.Closed += (_, _) => _colorPicker = null;
+        _colorPicker.Activate();
+    }
+
     private void SendToFlyout_Opening(object sender, object e)
     {
         SendToFlyout.Items.Clear();

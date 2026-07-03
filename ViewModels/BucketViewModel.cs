@@ -54,9 +54,15 @@ public partial class BucketViewModel : ObservableObject
         // Apply restored or default state.
         Name = state?.Name ?? "";
         Color = state?.Color ?? BucketColor.Blue;
-        AccentBrush = new SolidColorBrush(ColorPalette.ToColor(Color));
-        BackgroundBrush = new SolidColorBrush(ColorPalette.ToBackground(Color));
-        TitleBarBrush = BuildTitleBarBrush(Color);
+        Windows.UI.Color? custom = ColorPalette.FromHex(state?.CustomColor);
+        CustomColorHex = custom is Windows.UI.Color cc ? ColorPalette.ToHex(cc) : null;
+        Windows.UI.Color accent = custom ?? ColorPalette.ToColor(Color);
+        Windows.UI.Color background = custom is Windows.UI.Color c2
+            ? ColorPalette.BackgroundFromAccent(c2)
+            : ColorPalette.ToBackground(Color);
+        AccentBrush = new SolidColorBrush(accent);
+        BackgroundBrush = new SolidColorBrush(background);
+        TitleBarBrush = BuildTitleBarBrush(accent, background);
         AlwaysOnTop = state?.AlwaysOnTop ?? true;
         CurrentView = state?.View ?? (ViewMode)AppSettings.DefaultViewMode;
         Mode = state?.Mode ?? (WindowMode)AppSettings.DefaultWindowMode;
@@ -405,23 +411,40 @@ public partial class BucketViewModel : ObservableObject
         _host.ApplyViewMode(mode);
     }
 
+    /// <summary>A custom accent as "#RRGGBB" when the bucket isn't on a preset; else null.</summary>
+    public string? CustomColorHex { get; private set; }
+
+    /// <summary>Selects one of the 5 presets (and clears any custom colour).</summary>
     public void SetColor(BucketColor color)
     {
+        CustomColorHex = null;
         Color = color;
-        AccentBrush = new SolidColorBrush(ColorPalette.ToColor(color));
-        BackgroundBrush = new SolidColorBrush(ColorPalette.ToBackground(color));
-        TitleBarBrush = BuildTitleBarBrush(color);
+        ApplyAccent(ColorPalette.ToColor(color), ColorPalette.ToBackground(color));
     }
 
-    private static Brush BuildTitleBarBrush(BucketColor color)
+    /// <summary>Applies an arbitrary custom accent colour.</summary>
+    public void SetCustomColor(Windows.UI.Color accent)
+    {
+        CustomColorHex = ColorPalette.ToHex(accent);
+        ApplyAccent(accent, ColorPalette.BackgroundFromAccent(accent));
+    }
+
+    private void ApplyAccent(Windows.UI.Color accent, Windows.UI.Color background)
+    {
+        AccentBrush = new SolidColorBrush(accent);
+        BackgroundBrush = new SolidColorBrush(background);
+        TitleBarBrush = BuildTitleBarBrush(accent, background);
+    }
+
+    private static Brush BuildTitleBarBrush(Windows.UI.Color accent, Windows.UI.Color background)
     {
         var brush = new LinearGradientBrush
         {
             StartPoint = new Windows.Foundation.Point(0, 0),
             EndPoint = new Windows.Foundation.Point(0, 1)
         };
-        brush.GradientStops.Add(new GradientStop { Color = ColorPalette.ToHeader(color), Offset = 0 });
-        brush.GradientStops.Add(new GradientStop { Color = ColorPalette.ToBackground(color), Offset = 1 });
+        brush.GradientStops.Add(new GradientStop { Color = ColorPalette.HeaderFromAccent(accent), Offset = 0 });
+        brush.GradientStops.Add(new GradientStop { Color = background, Offset = 1 });
         return brush;
     }
 
@@ -483,6 +506,7 @@ public partial class BucketViewModel : ObservableObject
         Paths = Items.Select(i => i.FullPath).ToList(),
         Name = Name,
         Color = Color,
+        CustomColor = CustomColorHex,
         View = CurrentView,
         Mode = Mode,
         AlwaysOnTop = AlwaysOnTop

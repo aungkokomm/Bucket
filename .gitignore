@@ -47,6 +47,10 @@ PublishScripts/
 # Scratch
 build_pub.flag
 
+# Windows folder customization (folder-icon tools)
+desktop.ini
+folderico-*.ico
+
 # Code analysis and tooling
 _ReSharper*/
 *.DotSettings.user
